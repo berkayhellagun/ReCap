@@ -1,0 +1,20 @@
+﻿using Core.Utilities.Results.Abstract;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Core.Utilities.Results.Concreate
+{
+    public class SuccessResult:Result
+    {
+        public SuccessResult(string message):base(true)
+        {
+        }
+        public SuccessResult():base(true)
+        {
+
+        }
+    }
+}
