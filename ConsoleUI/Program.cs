@@ -47,11 +47,21 @@ namespace ConsoleUI
         {
             RentalManager rental = new RentalManager(new EfRentalsDal());
             Rentals rentals = new Rentals { Id = 1, CarId = 1, CustomerId = 1, ReturnDate = new DateTime(2021,12,5) };
-            rental.Add(rentals);
+            
+            var result=rental.Add(rentals);
+
+            if (result.Success)
+            {
+                Console.WriteLine(result.Message);
+            }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
 
             foreach (var item in rental.GetAll().Data)
             {
-                Console.WriteLine(item.CustomerId);
+                Console.WriteLine("All Customer's id: "+item.CustomerId);
             }
         }
     }

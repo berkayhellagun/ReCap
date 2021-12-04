@@ -8,21 +8,21 @@ namespace Business
 {
     public static class Messages
     {
-        public static string BrandAdded="Marka eklendi.";
-        public static string BrandRemoved = "Marka silindi.";
-        public static string BrandUpdated = "Marka güncellendi";
+        public static string BrandAdded="Brand added.";
+        public static string BrandRemoved = "Brand removed.";
+        public static string BrandUpdated = "Brand updated";
 
-        public static string CarNotInsertPriceZero = "Araba eklenemedi. Tutar sıfırdan büyük olmalı";
-        public static string CarNotInsertNameLenght = "Araba eklenemedi. İsim 2 karakterden fazla olmalı";
-        public static string CarInsert = "Araba eklendi";
-        public static string CarRemoved = "Araba silindi";
-        public static string CarUpdated = "Araba güncellendi";
+        public static string CarNotInsertPriceZero = "Car couldn't insert. Car price must be greater than zero.";
+        public static string CarNotInsertNameLenght = "Car couldn't insert. Lenght of car name must be greater than two char.";
+        public static string CarInsert = "Car added.";
+        public static string CarRemoved = "Car removed.";
+        public static string CarUpdated = "Car updated.";
 
-        public static string ColorAdded = "Renk eklendi.";
-        public static string ColorRemoved = "Renk silindi.";
-        public static string ColorUpdated = "Renk güncellendi.";
+        public static string ColorAdded = "Color added.";
+        public static string ColorRemoved = "Color removed.";
+        public static string ColorUpdated = "Color updated.";
         
-        public static string RentalAdded="Kiralama başarılı";
-        public static string RentalNotAdded = "Kiralama başarısız, Araç kullanımda";
+        public static string RentalAdded= "Car rental is successful.";
+        public static string RentalNotAdded = "Car rental is failure, Car not-exist.";
     }
 }
