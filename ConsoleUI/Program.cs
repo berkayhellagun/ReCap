@@ -21,7 +21,7 @@ namespace ConsoleUI
         {
             CarManager carManager = new CarManager(new EfCarDal());
             Car car = new Car();
-            car.CarId =4; car.DailyPrice = 20; car.Descripton = "qhasqai"; car.BrandId = 2; car.CarName = "nissan"; car.ColorId = 122; car.ModelYear = 2005;
+            car.CarId =4; car.DailyPrice = 20; car.Descripton = "qashqai"; car.BrandId = 2; car.CarName = "nissan"; car.ColorId = 122; car.ModelYear = 2005;
 
 
             carManager.Add(car);
@@ -37,7 +37,7 @@ namespace ConsoleUI
             UserManager userManager = new UserManager(new EfUsersDal());
             Users user1=new Users{ Id=1,FirstName="Berkay",LastName="Hellagun",Email="bhellagun@gmail.com",Password="selam"};
             
-            userManager.Delete(user1);
+            userManager.Add(user1);
             foreach (var item in userManager.GetAll().Data)
             {
                 Console.WriteLine(item.FirstName);

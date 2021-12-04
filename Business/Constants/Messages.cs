@@ -21,6 +21,8 @@ namespace Business
         public static string ColorAdded = "Renk eklendi.";
         public static string ColorRemoved = "Renk silindi.";
         public static string ColorUpdated = "Renk güncellendi.";
-
+        
+        public static string RentalAdded="Kiralama başarılı";
+        public static string RentalNotAdded = "Kiralama başarısız, Araç kullanımda";
     }
 }

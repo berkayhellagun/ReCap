@@ -27,12 +27,11 @@ namespace Business.Concreate
             {
                 t.RentDate = DateTime.Now.Date;
                 _rentalDal.Add(t);
-                return new SuccessResult("Car Added.");
+                return new SuccessResult(Messages.RentalAdded);
             }
             else
             {
-                Console.WriteLine("car not exist");
-                return new ErrorResult();
+                return new ErrorResult(Messages.RentalNotAdded);
             }
         }
 
