@@ -21,15 +21,17 @@ namespace Business.Concreate
         }
 
         public IResult Add(Rentals t)
-        {
-            var rental = _rentalDal.Get(r => r.CarId == t.CarId);
-            if (rental == null || rental.ReturnDate<DateTime.Now.Date)
+        { 
+            var result=_rentalDal.Get(r=>r.CarId==t.CarId);
+            if (result==null||result.ReturnDate<DateTime.Now.Date)
             {
+                t.RentDate = DateTime.Now.Date;
                 _rentalDal.Add(t);
-                return new SuccessResult();
+                return new SuccessResult("Car Added.");
             }
             else
             {
+                Console.WriteLine("car not exist");
                 return new ErrorResult();
             }
         }

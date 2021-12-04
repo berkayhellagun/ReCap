@@ -13,7 +13,8 @@ namespace ConsoleUI
         static void Main(string[] args)
         {
             //CarManagerTest();
-            UserManagerTest();
+            //UserManagerTest();
+            RentalTest();
         }
 
         private static void CarManagerTest()
@@ -34,12 +35,23 @@ namespace ConsoleUI
         private static void UserManagerTest()
         {
             UserManager userManager = new UserManager(new EfUsersDal());
-            Users user1=new Users{ Id=2,FirstName="Berkay",LastName="Hellagun",Email="bhellagun@gmail.com",Password="selam"};
+            Users user1=new Users{ Id=1,FirstName="Berkay",LastName="Hellagun",Email="bhellagun@gmail.com",Password="selam"};
             
-            userManager.Update(user1);
+            userManager.Delete(user1);
             foreach (var item in userManager.GetAll().Data)
             {
                 Console.WriteLine(item.FirstName);
+            }
+        }
+        private static void RentalTest()
+        {
+            RentalManager rental = new RentalManager(new EfRentalsDal());
+            Rentals rentals = new Rentals { Id = 1, CarId = 1, CustomerId = 1, ReturnDate = new DateTime(2021,12,5) };
+            rental.Add(rentals);
+
+            foreach (var item in rental.GetAll().Data)
+            {
+                Console.WriteLine(item.CustomerId);
             }
         }
     }
