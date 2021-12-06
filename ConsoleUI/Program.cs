@@ -1,9 +1,9 @@
 ﻿using Business.Abstract;
-using Business.Concreate;
+using Business.Concrete;
 using DataAccess.Abstract;
-using DataAccess.Concreate;
-using DataAccess.Concreate.EntityFramework;
-using Entities.Concreate;
+using DataAccess.Concrete;
+using DataAccess.Concrete.EntityFramework;
+using Entities.Concrete;
 using System;
 
 namespace ConsoleUI
@@ -35,7 +35,7 @@ namespace ConsoleUI
         private static void UserManagerTest()
         {
             UserManager userManager = new UserManager(new EfUsersDal());
-            Users user1=new Users{ Id=1,FirstName="Berkay",LastName="Hellagun",Email="bhellagun@gmail.com",Password="selam"};
+            User user1=new User{ Id=1,FirstName="Berkay",LastName="Hellagun",Email="bhellagun@gmail.com",Password="selam"};
             
             userManager.Add(user1);
             foreach (var item in userManager.GetAll().Data)
@@ -46,7 +46,7 @@ namespace ConsoleUI
         private static void RentalTest()
         {
             RentalManager rental = new RentalManager(new EfRentalsDal());
-            Rentals rentals = new Rentals { Id = 1, CarId = 1, CustomerId = 1, ReturnDate = new DateTime(2021,12,5) };
+            Rental rentals = new Rental { Id = 1, CarId = 1, CustomerId = 1, ReturnDate = new DateTime(2021,12,5) };
             
             var result=rental.Add(rentals);
 

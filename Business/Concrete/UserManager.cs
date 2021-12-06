@@ -1,15 +1,15 @@
 ﻿using Business.Abstract;
 using Core.Utilities.Results.Abstract;
-using Core.Utilities.Results.Concreate;
+using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
-using Entities.Concreate;
+using Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Business.Concreate
+namespace Business.Concrete
 {
     public class UserManager : IUserService
     {
@@ -20,29 +20,29 @@ namespace Business.Concreate
             _userDal = userDal;
         }
 
-        public IResult Add(Users t)
+        public IResult Add(User t)
         {
             _userDal.Add(t);
             return new SuccessResult();
         }
 
-        public IResult Delete(Users t)
+        public IResult Delete(User t)
         {
             _userDal.Delete(t);
             return new SuccessResult();
         }
 
-        public IDataResult<List<Users>> GetAll()
+        public IDataResult<List<User>> GetAll()
         {
-            return new SuccessDataResult<List<Users>>(_userDal.GetAll());
+            return new SuccessDataResult<List<User>>(_userDal.GetAll());
         }
 
-        public IDataResult<Users> GetById(int id)
+        public IDataResult<User> GetById(int id)
         {
-            return new SuccessDataResult<Users>(_userDal.Get(u => u.Id == id));
+            return new SuccessDataResult<User>(_userDal.Get(u => u.Id == id));
         }
 
-        public IResult Update(Users t)
+        public IResult Update(User t)
         {
             _userDal.Update(t);
             return new SuccessResult();

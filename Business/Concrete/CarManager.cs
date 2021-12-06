@@ -1,9 +1,9 @@
 ﻿using Business.Abstract;
 using Core.Utilities.Results.Abstract;
-using Core.Utilities.Results.Concreate;
+using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
-using DataAccess.Concreate.EntityFramework;
-using Entities.Concreate;
+using DataAccess.Concrete.EntityFramework;
+using Entities.Concrete;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;

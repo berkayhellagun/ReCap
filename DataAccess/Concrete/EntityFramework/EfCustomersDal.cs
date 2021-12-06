@@ -1,15 +1,15 @@
 ﻿using Core.DataAccess.EntityFramework;
 using DataAccess.Abstract;
-using Entities.Concreate;
+using Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess.Concreate.EntityFramework
+namespace DataAccess.Concrete.EntityFramework
 {
-    public class EfCustomersDal:EfEntityRepositoryBase<Customers,DBContex>,ICustomerDal
+    public class EfCustomersDal:EfEntityRepositoryBase<Customer,DBContex>,ICustomerDal
     {
     }
 }

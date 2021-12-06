@@ -1,15 +1,15 @@
 ﻿using Business.Abstract;
 using Core.Utilities.Results.Abstract;
-using Core.Utilities.Results.Concreate;
+using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
-using Entities.Concreate;
+using Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Business.Concreate
+namespace Business.Concrete
 {
     public class CustomerManager : ICustomerService
     {
@@ -20,29 +20,29 @@ namespace Business.Concreate
             _customerDal = customerDal;
         }
 
-        public IResult Add(Customers t)
+        public IResult Add(Customer t)
         {
             _customerDal.Add(t);
             return new SuccessResult();
         }
 
-        public IResult Delete(Customers t)
+        public IResult Delete(Customer t)
         {
             _customerDal.Delete(t);
             return new SuccessResult();
         }
 
-        public IDataResult<List<Customers>> GetAll()
+        public IDataResult<List<Customer>> GetAll()
         {
-            return new SuccessDataResult<List<Customers>>(_customerDal.GetAll());
+            return new SuccessDataResult<List<Customer>>(_customerDal.GetAll());
         }
 
-        public IDataResult<Customers> GetById(int id)
+        public IDataResult<Customer> GetById(int id)
         {
-            return new SuccessDataResult<Customers>(_customerDal.Get(c => c.Id == id));
+            return new SuccessDataResult<Customer>(_customerDal.Get(c => c.Id == id));
         }
 
-        public IResult Update(Customers t)
+        public IResult Update(Customer t)
         {
             _customerDal.Update(t);
             return new SuccessResult();

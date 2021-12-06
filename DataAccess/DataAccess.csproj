@@ -5,9 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Concreate\InMemory\**" />
-    <EmbeddedResource Remove="Concreate\InMemory\**" />
-    <None Remove="Concreate\InMemory\**" />
+    <Compile Remove="Concrete\InMemory\**" />
+    <EmbeddedResource Remove="Concrete\InMemory\**" />
+    <None Remove="Concrete\InMemory\**" />
   </ItemGroup>
 
   <ItemGroup>
