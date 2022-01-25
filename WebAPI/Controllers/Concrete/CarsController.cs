@@ -7,9 +7,9 @@ namespace WebAPI.Controllers.Concrete
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CarsController : GenericController<Car>
+    public class CarsController:GenericController<Car>
     {
-        ICarService _carService;
+        protected ICarService _carService;
         public CarsController(ICarService carService):base(carService)
         {
             _carService = carService;
