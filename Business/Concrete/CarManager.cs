@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Business.Concrete
 {
-    public class CarManager:ICarService
+    public class CarManager : ICarService
     {
         ICarDal _carDal;
 
@@ -25,7 +25,7 @@ namespace Business.Concrete
 
         public IResult Add(Car t)
         {
-            if (t.Descripton.Length >=2)
+            if (t.Descripton.Length >= 2)
             {
                 if (t.DailyPrice > 0)
                 {
@@ -53,10 +53,10 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<List<Car>>(_carDal.GetAll());
         }
-
+        
         public IDataResult<Car> GetById(int id)
         {
-            throw new NotImplementedException();
+            return new SuccessDataResult<Car>(_carDal.Get(c => c.CarId == id));
         }
 
         public IDataResult<List<Car>> GetCarByBrandId(int id)
