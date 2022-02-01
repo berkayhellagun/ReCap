@@ -12,7 +12,8 @@ namespace Business.ValidationRules.FluentValidation
     {
         public RentalValidator()
         {
-            RuleFor(r => r.ReturnDate).LessThan(DateTime.Now);
+            RuleFor(r => r.ReturnDate)
+                .LessThan(DateTime.Now).WithMessage("car not exist");
             RuleFor(r => r.CustomerId).NotEmpty();
             RuleFor(r => r.CarId).NotEmpty();
         }
