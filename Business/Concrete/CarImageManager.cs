@@ -19,11 +19,13 @@ namespace Business.Concrete
     {
         ICarImageDal _carImageDal;
         IFileHelper _fileHelper;
+        ICarService _carService;
 
-        public CarImageManager(ICarImageDal carImageDal, IFileHelper fileHelper)
+        public CarImageManager(ICarImageDal carImageDal, IFileHelper fileHelper, ICarService carService)
         {
             _carImageDal = carImageDal;
             _fileHelper = fileHelper;
+            _carService = carService;
         }
 
         public IResult Add(IFormFile formFile, CarImage t)
@@ -59,11 +61,15 @@ namespace Business.Concrete
         public IDataResult<List<CarImage>> GetImageByCarId(int carId)
         {
             var result = BusinessRules.Run(CheckIfNotExistImage(carId));
-            if (result != null)
+            var result2 = BusinessRules.Run(CheckCarId(carId));
+            if (result2.Success)
             {
-                return new ErrorDataResult<List<CarImage>>(GetDefaultImage(carId).Data);
+                if (result != null)
+                {
+                    return new SuccessDataResult<List<CarImage>>(GetDefaultImage(carId).Data);
+                }
             }
-            return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll(c => c.CarId == carId));
+            return new ErrorDataResult<List<CarImage>>(_carImageDal.GetAll(c => c.CarId == carId),"Car not exist.");
         }
 
         public IResult Update(IFormFile formFile, CarImage t)
@@ -106,6 +112,18 @@ namespace Business.Concrete
             List<CarImage> carImage = new List<CarImage>();
             carImage.Add(new CarImage { CarId = carId, Date = DateTime.Now, ImagePath = "DefaultImage.jpg" });
             return new SuccessDataResult<List<CarImage>>(carImage);
+        }
+        private IResult CheckCarId(int carId)
+        {
+            var result = _carService.GetAll();
+            foreach (var item in result.Data)
+            {
+                if (item.CarId != carId)
+                {
+                    return new ErrorResult();
+                }
+            }
+            return new SuccessResult();
         }
     }
 }
