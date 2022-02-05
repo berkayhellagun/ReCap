@@ -60,15 +60,15 @@ namespace Business.Concrete
 
         public IDataResult<List<CarImage>> GetImageByCarId(int carId)
         {
-            var result = BusinessRules.Run(CheckIfNotExistImage(carId));
-            var result2 = BusinessRules.Run(CheckCarId(carId));
+            var checkImage = BusinessRules.Run(CheckIfNotExistImage(carId));
+            var checkCarId = BusinessRules.Run(CheckCarId(carId));
             
-            if (result2 != null)
+            if (checkCarId != null)
             {
                 return new ErrorDataResult<List<CarImage>>("Car not exist.");
             }
 
-            if (result != null)
+            if (checkImage != null)
             {
                 return new SuccessDataResult<List<CarImage>>(GetDefaultImage(carId).Data);
             }
