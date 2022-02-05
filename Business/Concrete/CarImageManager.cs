@@ -62,14 +62,18 @@ namespace Business.Concrete
         {
             var result = BusinessRules.Run(CheckIfNotExistImage(carId));
             var result2 = BusinessRules.Run(CheckCarId(carId));
-            if (result2.Success)
+            
+            if (result2 != null)
             {
-                if (result != null)
-                {
-                    return new SuccessDataResult<List<CarImage>>(GetDefaultImage(carId).Data);
-                }
+                return new ErrorDataResult<List<CarImage>>("Car not exist.");
             }
-            return new ErrorDataResult<List<CarImage>>(_carImageDal.GetAll(c => c.CarId == carId),"Car not exist.");
+
+            if (result != null)
+            {
+                return new SuccessDataResult<List<CarImage>>(GetDefaultImage(carId).Data);
+            }
+
+            return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll(c => c.CarId == carId));
         }
 
         public IResult Update(IFormFile formFile, CarImage t)
@@ -118,12 +122,16 @@ namespace Business.Concrete
             var result = _carService.GetAll();
             foreach (var item in result.Data)
             {
-                if (item.CarId != carId)
+                if (item.CarId == carId)
                 {
-                    return new ErrorResult();
+                    return new SuccessResult();
+                }
+                else
+                {
+                    continue;
                 }
             }
-            return new SuccessResult();
+            return new ErrorResult();
         }
     }
 }
