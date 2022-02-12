@@ -14,9 +14,9 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfCarDal : EfEntityRepositoryBase<Car, DBContex>, ICarDal
     {
-        public List<CarDetailDto> GetCarDetails()
+        public List<CarDetailDto> GetCarDetails(Expression<Func<Car, bool>> filter = null)
         {
-            using (DBContex contex=new DBContex())
+            using (DBContex contex = new DBContex())
             {
                 var result = from c in contex.Cars
                              join b in contex.Brands on c.BrandId equals b.BrandId
@@ -24,9 +24,9 @@ namespace DataAccess.Concrete.EntityFramework
                              select new CarDetailDto
                              {
                                  name = c.CarName,
-                                 colorName=cn.ColorName,
-                                 brandName=b.BrandName,
-                                 dailyPrice=c.DailyPrice
+                                 colorName = cn.ColorName,
+                                 brandName = b.BrandName,
+                                 dailyPrice = c.DailyPrice
                              };
 
                 return result.ToList();
