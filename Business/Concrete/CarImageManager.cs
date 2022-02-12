@@ -122,7 +122,7 @@ namespace Business.Concrete
             var result = _carService.GetAll();
             foreach (var item in result.Data)
             {
-                if (item.CarId == carId)
+                if (item.Id == carId)
                 {
                     return new SuccessResult();
                 }

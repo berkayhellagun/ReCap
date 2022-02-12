@@ -19,13 +19,13 @@ namespace DataAccess.Concrete.EntityFramework
             using (DBContex contex = new DBContex())
             {
                 var result = from c in contex.Cars
-                             join b in contex.Brands on c.BrandId equals b.BrandId
-                             join cn in contex.Colors on c.ColorId equals cn.ColorId
+                             join b in contex.Brands on c.Id equals b.Id
+                             join cn in contex.Colors on c.Id equals cn.Id
                              select new CarDetailDto
                              {
-                                 name = c.CarName,
-                                 colorName = cn.ColorName,
-                                 brandName = b.BrandName,
+                                 name = c.Name,
+                                 colorName = cn.Name,
+                                 brandName = b.Name,
                                  dailyPrice = c.DailyPrice
                              };
 

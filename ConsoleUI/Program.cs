@@ -22,7 +22,7 @@ namespace ConsoleUI
         {
             CarManager carManager = new CarManager(new EfCarDal());
             Car car = new Car();
-            car.CarId =4; car.DailyPrice = 20; car.Descripton = "qashqai"; car.BrandId = 2; car.CarName = "nissan"; car.ColorId = 122; car.ModelYear = 2005;
+            car.Id =4; car.DailyPrice = 20; car.Descripton = "qashqai"; car.BrandId = 2; car.Name = "nissan"; car.ColorId = 122; car.ModelYear = 2005;
 
 
             carManager.Add(car);
@@ -31,7 +31,7 @@ namespace ConsoleUI
         private static void UserManagerTest()
         {
             UserManager userManager = new UserManager(new EfUserDal());
-            User user1=new User{ Id=1,FirstName="Berkay",LastName="Hellagun",Email="bhellagun@gmail.com",Password="selam"};
+            User user1=new User{ Id=1,FirstName="Berkay",LastName="Hellagun",Email="bhellagun@gmail.com"};
             
             userManager.Add(user1);
             foreach (var item in userManager.GetAll().Data)
