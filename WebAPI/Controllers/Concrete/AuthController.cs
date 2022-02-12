@@ -27,7 +27,7 @@ namespace WebAPI.Controllers.Concrete
             var result = _authService.CreateAccessToken(userToLogin.Data);
             if (result.Success)
             {
-                return Ok(result.Data);
+                return Ok(result.Message);
             }
 
             return BadRequest(result.Message);

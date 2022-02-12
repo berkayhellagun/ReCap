@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Core.Entities.Concrete;
+using Core.Utilities.Business;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using Core.Utilities.Security.Hashing;
@@ -26,35 +27,25 @@ namespace Business.Concrete
 
         public IDataResult<User> Register(UserForRegisterDto userForRegisterDto, string password)
         {
-            byte[] passwordHash, passwordSalt;
-            HashingHelper.CreatePasswordHash(password, out passwordHash, out passwordSalt);
-            var user = new User
-            {
-                Email = userForRegisterDto.Email,
-                FirstName = userForRegisterDto.FirstName,
-                LastName = userForRegisterDto.LastName,
-                PasswordHash = passwordHash,
-                PasswordSalt = passwordSalt,
-                Status = true
-            };
+            var user = RegisterModule(userForRegisterDto, password);
             _userService.Add(user);
             return new SuccessDataResult<User>(user, "Registered");
         }
 
         public IDataResult<User> Login(UserForLoginDto userForLoginDto)
         {
-            var userToCheck = _userService.GetByMail(userForLoginDto.Email);
-            if (userToCheck == null)
+            var user = CheckEmail(userForLoginDto);
+            if (user == null)
             {
                 return new ErrorDataResult<User>("User Not Found");
             }
 
-            if (!HashingHelper.VerifyPasswordHash(userForLoginDto.Password, userToCheck.PasswordHash, userToCheck.PasswordSalt))
+            var checkPassword = BusinessRules.Run(VerifyPassword(userForLoginDto));
+            if (checkPassword != null)
             {
-                return new ErrorDataResult<User>("Password Error");
+                return new ErrorDataResult<User>("Invalid password.");
             }
-
-            return new SuccessDataResult<User>(userToCheck, "Successful Login");
+            return new SuccessDataResult<User>(user, "Successful Login");
         }
 
         public IResult UserExists(string email)
@@ -71,6 +62,42 @@ namespace Business.Concrete
             var claims = _userService.GetClaims(user);
             var accessToken = _tokenHelper.CreateToken(user, claims);
             return new SuccessDataResult<AccessToken>("Access Token Created");
+        }
+
+        private User RegisterModule(UserForRegisterDto userForRegisterDto, string password)
+        {
+            byte[] passwordHash, passwordSalt;
+            HashingHelper.CreatePasswordHash(password, out passwordHash, out passwordSalt);
+            var user = new User
+            {
+                Email = userForRegisterDto.Email,
+                FirstName = userForRegisterDto.FirstName,
+                LastName = userForRegisterDto.LastName,
+                PasswordHash = passwordHash,
+                PasswordSalt = passwordSalt,
+                Status = true
+            };
+            return user;
+        }
+
+        private User CheckEmail(UserForLoginDto userForLoginDto)
+        {
+            var result = _userService.GetByMail(userForLoginDto.Email);
+            if (result == null)
+            {
+                return null;
+            }
+            return result;
+        }
+
+        private IResult VerifyPassword(UserForLoginDto userForLoginDto)
+        {
+            var userToCheck = CheckEmail(userForLoginDto);
+            if (!HashingHelper.VerifyPasswordHash(userForLoginDto.Password, userToCheck.PasswordHash, userToCheck.PasswordSalt))
+            {
+                return new ErrorResult("Password Error");
+            }
+            return new SuccessResult();
         }
     }
 }
