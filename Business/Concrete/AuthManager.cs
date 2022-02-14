@@ -48,6 +48,13 @@ namespace Business.Concrete
             return new SuccessDataResult<User>(user, "Successful Login");
         }
 
+        public IDataResult<AccessToken> CreateAccessToken(User user)
+        {
+            var claims = _userService.GetClaims(user);
+            var accessToken = _tokenHelper.CreateToken(user, claims);
+            return new SuccessDataResult<AccessToken>(accessToken,"Access Token Created");
+        }
+
         public IResult UserExists(string email)
         {
             if (_userService.GetByMail(email) != null)
@@ -55,13 +62,6 @@ namespace Business.Concrete
                 return new ErrorResult("User Already Exists");
             }
             return new SuccessResult();
-        }
-
-        public IDataResult<AccessToken> CreateAccessToken(User user)
-        {
-            var claims = _userService.GetClaims(user);
-            var accessToken = _tokenHelper.CreateToken(user, claims);
-            return new SuccessDataResult<AccessToken>("Access Token Created");
         }
 
         private User RegisterModule(UserForRegisterDto userForRegisterDto, string password)
@@ -95,7 +95,7 @@ namespace Business.Concrete
             var userToCheck = CheckEmail(userForLoginDto);
             if (!HashingHelper.VerifyPasswordHash(userForLoginDto.Password, userToCheck.PasswordHash, userToCheck.PasswordSalt))
             {
-                return new ErrorResult("Password Error");
+                return new ErrorResult();
             }
             return new SuccessResult();
         }

@@ -15,6 +15,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Core.Aspects.Autofac.Validation;
 using Entities.DTOs;
+using Business.BusinessAspect.Autofac;
 
 namespace Business.Concrete
 {
@@ -27,6 +28,7 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
+        [SecuredOperation("admin,")]
         [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car t)
         {
