@@ -49,6 +49,7 @@ namespace Core.Utilities.Security.JWT
                 );
             return jwt;
         }
+
         private IEnumerable<Claim> SetClaims(User user, List<OperationClaim> operationClaims)
         {
             var claims = new List<Claim>();

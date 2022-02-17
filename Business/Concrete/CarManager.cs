@@ -16,6 +16,8 @@ using System.Threading.Tasks;
 using Core.Aspects.Autofac.Validation;
 using Entities.DTOs;
 using Business.BusinessAspect.Autofac;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Performance;
 
 namespace Business.Concrete
 {
@@ -30,6 +32,7 @@ namespace Business.Concrete
 
         [SecuredOperation("admin,")]
         [ValidationAspect(typeof(CarValidator))]
+        [PerformanceAspect(5)]
         public IResult Add(Car t)
         {
             _carDal.Add(t);
@@ -42,6 +45,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CarRemoved);
         }
 
+        [CacheAspect]
         public IDataResult<List<Car>> GetAll()
         {
             return new SuccessDataResult<List<Car>>(_carDal.GetAll());
