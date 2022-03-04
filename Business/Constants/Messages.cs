@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Entities.Concrete;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace Business
 {
     public static class Messages
     {
-        public static string BrandAdded="Brand added.";
+        public static string BrandAdded = "Brand added.";
         public static string BrandRemoved = "Brand removed.";
         public static string BrandUpdated = "Brand updated";
 
@@ -21,8 +22,10 @@ namespace Business
         public static string ColorAdded = "Color added.";
         public static string ColorRemoved = "Color removed.";
         public static string ColorUpdated = "Color updated.";
-        
-        public static string RentalAdded= "Car rental is successful.";
+
+        public static string RentalAdded = "Car rental is successful.";
         public static string RentalNotAdded = "Car rental is failure, Car not-exist.";
+        public static string PaymentSuccess = "Payment Successful";
+        public static string CreditCardError = "Credit Card not found.";
     }
 }
