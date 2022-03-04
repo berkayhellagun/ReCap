@@ -18,9 +18,9 @@ namespace WebAPI.Controllers.Concrete
         }
 
         [HttpPost("paymentInfo")]
-        public IActionResult CheckPaymentInfo(CreditCard creditCard, Car car)
+        public IActionResult CheckPaymentInfo(CreditCard creditCard, int carId)
         {
-            var result = _paymentService.Pay(creditCard, car);
+            var result = _paymentService.Pay(creditCard, carId);
             if (result.Success)
             {
                 return Ok(result);

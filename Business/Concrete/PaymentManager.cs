@@ -14,17 +14,20 @@ namespace Business.Concrete
     public class PaymentManager : IPaymentService
     {
         ICreditCardService _creditCardService;
+        ICarService _carService;
 
-        public PaymentManager(ICreditCardService creditCardService)
+        public PaymentManager(ICreditCardService creditCardService, ICarService carService)
         {
             _creditCardService = creditCardService;
+            _carService = carService;
         }
 
-        public IResult Pay(CreditCard creditCard, Car car)
+        public IResult Pay(CreditCard creditCard, int carId)
         {
-            if (creditCard.Balance >= car.DailyPrice)
+            var result = _carService.GetById(carId);
+            if (creditCard.Balance >= result.Data.DailyPrice)
             {
-                creditCard.Balance = creditCard.Balance - car.DailyPrice;
+                creditCard.Balance = creditCard.Balance - result.Data.DailyPrice;
                 _creditCardService.Update(creditCard);
                 return new SuccessResult(Messages.PaymentSuccess);
             }

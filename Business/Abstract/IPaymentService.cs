@@ -11,6 +11,6 @@ namespace Business.Abstract
 {
     public interface IPaymentService
     {
-        IResult Pay(CreditCard creditCard, Car car);
+        IResult Pay(CreditCard creditCard, int carId);
     }
 }
