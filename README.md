@@ -3,13 +3,15 @@
 * Entity Framework
 * Restful API
 * Autofac
+* Fluent Validation
+* Redis
+* log4net
 * Result Types
 * Design Patterns
 * Aspect Oriented Programming
 * JSON Web Token
 * Dependency Injection
 * Inversion of Control
-* Fluent Validation
 * Cross Cutting Concerns
 * Cache Management
 * Extensions
