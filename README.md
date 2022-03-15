@@ -1,15 +1,17 @@
 ## Used Technology/Technique
 
 * Entity Framework
-* Restful API
+* Restfull API
 * Autofac
+* Fluent Validation
+* Redis
+* log4net
 * Result Types
 * Design Patterns
 * Aspect Oriented Programming
 * JSON Web Token
 * Dependency Injection
 * Inversion of Control
-* Fluent Validation
 * Cross Cutting Concerns
 * Cache Management
 * Extensions
