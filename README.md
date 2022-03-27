@@ -1,7 +1,7 @@
 ## Used Technology/Technique
 
 * Entity Framework
-* Restfull API
+* Restful API
 * Autofac
 * Fluent Validation
 * Redis
