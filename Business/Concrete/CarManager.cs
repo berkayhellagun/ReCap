@@ -18,6 +18,8 @@ using Entities.DTOs;
 using Business.BusinessAspect.Autofac;
 using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Performance;
+using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Logging.Log4Net.Loggers;
 
 namespace Business.Concrete
 {
@@ -30,6 +32,7 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
+        [LogAspect(typeof(Database))]
         [SecuredOperation("admin,")]
         [ValidationAspect(typeof(CarValidator))]
         [PerformanceAspect(5)]
@@ -45,6 +48,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CarRemoved);
         }
 
+        [LogAspect(typeof(File))]
         [CacheAspect]
         public IDataResult<List<Car>> GetAll()
         {
