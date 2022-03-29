@@ -1,23 +1,23 @@
 ## Used Technology/Technique
 
+* ASP.NET Core
 * Entity Framework
-* Restfull API
+* Restful API
 * Autofac
 * Fluent Validation
 * Redis
-* log4net
-* Result Types
-* Design Patterns
-* Aspect Oriented Programming
 * JSON Web Token
+* log4net
+* Design Patterns
+* Aspect-Oriented Programming
+* Object-Oriented Programming
 * Dependency Injection
 * Inversion of Control
 * Cross Cutting Concerns
-* Cache Management
 * Extensions
-* Claim
+* Claims
 * Exception Middleware
 * Service Collection
+* Result Types
 * Error Handling
-* Validation Error Details
 * File Management
