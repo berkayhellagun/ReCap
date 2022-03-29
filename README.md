@@ -1,6 +1,6 @@
 ## Used Technology/Technique
 
-* ASP.Net Core
+* ASP.NET Core
 * Entity Framework
 * Restful API
 * Autofac
