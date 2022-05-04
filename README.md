@@ -13,7 +13,6 @@
 * Object-Oriented Programming
 * Dependency Injection
 * Inversion of Control
-* Cross Cutting Concerns
 * Extensions
 * Claims
 * Exception Middleware
