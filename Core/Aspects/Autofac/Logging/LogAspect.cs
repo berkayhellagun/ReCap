@@ -12,21 +12,20 @@ namespace Core.Aspects.Autofac.Logging
 {
     public class LogAspect : MethodInterception
     {
-        LoggerServiceBase loggerServiceBase;
+        LoggerServiceBase _loggerServiceBase;
 
         public LogAspect(Type logger)
         {
             if (logger.BaseType != typeof(LoggerServiceBase))
             {
-                throw new Exception("Wrong logger type");
+                throw new Exception("This is not validator type.");
             }
-
-            loggerServiceBase = (LoggerServiceBase)Activator.CreateInstance(logger);
+            _loggerServiceBase = (LoggerServiceBase)Activator.CreateInstance(logger);
         }
 
         protected override void OnBefore(IInvocation invocation)
         {
-            loggerServiceBase.Info(GetLogDetail(invocation));
+            _loggerServiceBase.Info(GetLogDetail(invocation));
         }
 
         private LogDetail GetLogDetail(IInvocation invocation)
@@ -34,17 +33,20 @@ namespace Core.Aspects.Autofac.Logging
             var logParameter = new List<LogParameter>();
             for (int i = 0; i < invocation.Arguments.Length; i++)
             {
-                logParameter.Add(
-                    new LogParameter
-                    {
-                        Name = invocation.GetConcreteMethod().GetParameters()[i].Name,
-                        Value = invocation.Arguments[i],
-                        Type = invocation.Arguments[i].GetType().Name
-                    });
+                logParameter.Add(new LogParameter
+                {
+                    Name = invocation.GetConcreteMethod().GetParameters()[i].Name,
+                    Value = invocation.Arguments[i],
+                    Type = invocation.Arguments[i].GetType().Name
+                });
             }
-            var logDetail = new LogDetail { LogParameters=logParameter, MethodName=invocation.Method.Name};
+            var logDetail = new LogDetail
+            {
+                LogParameters = logParameter,
+                MethodName = invocation.Method.Name
+            };
+
             return logDetail;
         }
-
     }
 }

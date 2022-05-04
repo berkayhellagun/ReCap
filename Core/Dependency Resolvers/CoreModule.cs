@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Dependecny_Resolvers
+namespace Core.Dependency_Resolvers
 {
     public class CoreModule : ICoreModule
     {
