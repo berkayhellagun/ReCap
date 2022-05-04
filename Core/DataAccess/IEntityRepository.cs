@@ -12,8 +12,14 @@ namespace Core.DataAccess
     {
         List<T> GetAll(Expression<Func<T, bool>> filter = null);
         T Get(Expression<Func<T, bool>> filter);
-        void Add(T entity);
-        void Update(T entity);
-        void Delete(T entity);
+        bool Add(T entity);
+        bool Update(T entity);
+        bool Delete(T entity);
+
+        Task<bool> AsyncAdd(T entity);
+        Task<bool> AsyncUpdate(T entity);
+        Task<bool> AsyncDelete(T entity);
+        Task<List<T>> AsyncGetAll(Expression<Func<T, bool>> filter = null);
+        Task<T> AsyncGet(Expression<Func<T, bool>> filter);
     }
 }

@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Business.Abstract
 {
-    public interface IUserService:IManagerService<User>
+    public interface IUserService : IManagerService<User>
     {
-        List<OperationClaim> GetClaims(User user);
-        User GetByMail(string email);
+        Task<List<OperationClaim>> AsyncGetClaims(User user);
+        Task<User> AsyncGetByMail(string email);
     }
 }

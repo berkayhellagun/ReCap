@@ -61,7 +61,7 @@ namespace Business.Concrete
         public IDataResult<List<CarImage>> GetImageByCarId(int carId)
         {
             var checkImage = BusinessRules.Run(CheckIfNotExistImage(carId));
-            var checkCarId = BusinessRules.Run(CheckCarId(carId));
+            var checkCarId = BusinessRules.Run(CheckCarId(carId).Result);
             
             if (checkCarId != null)
             {
@@ -117,9 +117,9 @@ namespace Business.Concrete
             carImage.Add(new CarImage { CarId = carId, Date = DateTime.Now, ImagePath = "DefaultImage.jpg" });
             return new SuccessDataResult<List<CarImage>>(carImage);
         }
-        private IResult CheckCarId(int carId)
+        private async Task<IResult> CheckCarId(int carId)
         {
-            var result = _carService.GetAll();
+            var result = await _carService.AsyncGetAll();
             foreach (var item in result.Data)
             {
                 if (item.Id == carId)

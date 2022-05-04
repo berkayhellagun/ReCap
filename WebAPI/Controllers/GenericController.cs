@@ -26,9 +26,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("add")]
-        public IActionResult Add(TEntity t)
+        public async Task<IActionResult> Add(TEntity t)
         {
-            var result=_manager.Add(t);
+            var result=await _manager.AsyncAdd(t);
             if (result.Success)
             {
                 return Ok(result.Message);
@@ -37,9 +37,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpDelete("delete")]
-        public IActionResult Delete(TEntity t)
+        public async Task<IActionResult> Delete(TEntity t)
         {
-            var result = _manager.Delete(t);
+            var result = await _manager.AsyncDelete(t);
             if (result.Success)
             {
                 return Ok(result);
@@ -48,9 +48,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("getall")]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var result = _manager.GetAll();
+            var result = await _manager.AsyncGetAll();
             if (result.Success)
             {
                 return Ok(result);
@@ -59,9 +59,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("getbyid")]
-        public IActionResult GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
-            var result = _manager.GetById(id);
+            var result = await _manager.AsyncGetById(id);
             if (result.Success)
             {
                 return Ok(result);
@@ -70,9 +70,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPut("update")]
-        public IActionResult Update(TEntity t)
+        public async Task<IActionResult> Update(TEntity t)
         {
-            var result = _manager.Update(t);
+            var result = await _manager.AsyncUpdate(t);
             if (result.Success)
             {
                 return Ok(result);

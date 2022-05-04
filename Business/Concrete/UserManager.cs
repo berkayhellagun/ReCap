@@ -21,41 +21,41 @@ namespace Business.Concrete
             _userDal = userDal;
         }
 
-        public IResult Add(User t)
+        public async Task<IResult> AsyncAdd(User t)
         {
-            _userDal.Add(t);
+            await _userDal.AsyncAdd(t);
             return new SuccessResult();
         }
 
-        public IResult Delete(User t)
+        public async Task<IResult> AsyncDelete(User t)
         {
-            _userDal.Delete(t);
+            await _userDal.AsyncDelete(t);
             return new SuccessResult();
         }
 
-        public IDataResult<List<User>> GetAll()
+        public async Task<IDataResult<List<User>>> AsyncGetAll()
         {
-            return new SuccessDataResult<List<User>>(_userDal.GetAll());
+            return new SuccessDataResult<List<User>>(await _userDal.AsyncGetAll());
         }
 
-        public IDataResult<User> GetById(int id)
+        public async Task<IDataResult<User>> AsyncGetById(int id)
         {
-            return new SuccessDataResult<User>(_userDal.Get(u => u.Id == id));
+            return new SuccessDataResult<User>(await _userDal.AsyncGet(u => u.Id == id));
         }
 
-        public User GetByMail(string email)
+        public async Task<User> AsyncGetByMail(string email)
         {
-            return _userDal.Get(u => u.Email == email);
+            return await _userDal.AsyncGet(u => u.Email == email);
+        }
+        
+        public async Task<List<OperationClaim>> AsyncGetClaims(User user)
+        {
+            return await _userDal.AsyncGetClaims(user);
         }
 
-        public List<OperationClaim> GetClaims(User user)
+        public async Task<IResult> AsyncUpdate(User t)
         {
-            return _userDal.GetClaims(user);
-        }
-
-        public IResult Update(User t)
-        {
-            _userDal.Update(t);
+            await _userDal.AsyncUpdate(t);
             return new SuccessResult();
         }
     }

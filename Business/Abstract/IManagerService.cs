@@ -10,10 +10,10 @@ namespace Business.Abstract
 {
     public interface IManagerService<T> where T : class,IEntity,new()
     {
-        IDataResult<List<T>> GetAll();
-        IResult Add(T t);
-        IResult Update(T t);
-        IResult Delete(T t);
-        IDataResult<T> GetById(int id);
+        Task<IDataResult<List<T>>> AsyncGetAll();
+        Task<IResult> AsyncAdd(T t);
+        Task<IResult> AsyncUpdate(T t);
+        Task<IResult> AsyncDelete(T t);
+        Task<IDataResult<T>> AsyncGetById(int id);
     }
 }

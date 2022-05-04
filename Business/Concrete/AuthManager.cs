@@ -25,22 +25,22 @@ namespace Business.Concrete
             _tokenHelper = tokenHelper;
         }
 
-        public IDataResult<User> Register(UserForRegisterDto userForRegisterDto, string password)
+        public async Task<IDataResult<User>> Register(UserForRegisterDto userForRegisterDto, string password)
         {
             var user = RegisterModule(userForRegisterDto, password);
-            _userService.Add(user);
+            await _userService.AsyncAdd(user);
             return new SuccessDataResult<User>(user, "Registered");
         }
 
-        public IDataResult<User> Login(UserForLoginDto userForLoginDto)
+        public async Task<IDataResult<User>> Login(UserForLoginDto userForLoginDto)
         {
-            var user = CheckEmail(userForLoginDto);
+            var user = await CheckEmail(userForLoginDto);
             if (user == null)
             {
                 return new ErrorDataResult<User>("User Not Found");
             }
 
-            var checkPassword = BusinessRules.Run(VerifyPassword(userForLoginDto));
+            var checkPassword = BusinessRules.Run(VerifyPassword(userForLoginDto).Result);
             if (checkPassword != null)
             {
                 return new ErrorDataResult<User>("Invalid password.");
@@ -48,18 +48,18 @@ namespace Business.Concrete
             return new SuccessDataResult<User>(user, "Successful Login");
         }
 
-        public IDataResult<AccessToken> CreateAccessToken(User user)
+        public async Task<IDataResult<AccessToken>> CreateAccessToken(User user)
         {
-            var claims = _userService.GetClaims(user);
-            var accessToken = _tokenHelper.CreateToken(user, claims);
-            return new SuccessDataResult<AccessToken>(accessToken,"Access Token Created");
+            var claims = await _userService.AsyncGetClaims(user);
+            var accessToken = await _tokenHelper.CreateToken(user, claims);
+            return new SuccessDataResult<AccessToken>(accessToken, "Access-Token Created");
         }
 
-        public IResult UserExists(string email)
+        public async Task<IResult> UserExists(string email)
         {
-            if (_userService.GetByMail(email) != null)
+            if (await _userService.AsyncGetByMail(email) != null)
             {
-                return new ErrorResult("User Already Exists");
+                return new ErrorResult("User already exists");
             }
             return new SuccessResult();
         }
@@ -80,9 +80,9 @@ namespace Business.Concrete
             return user;
         }
 
-        private User CheckEmail(UserForLoginDto userForLoginDto)
+        private async Task<User> CheckEmail(UserForLoginDto userForLoginDto)
         {
-            var result = _userService.GetByMail(userForLoginDto.Email);
+            var result = await _userService.AsyncGetByMail(userForLoginDto.Email);
             if (result == null)
             {
                 return null;
@@ -90,9 +90,9 @@ namespace Business.Concrete
             return result;
         }
 
-        private IResult VerifyPassword(UserForLoginDto userForLoginDto)
+        private async Task<IResult> VerifyPassword(UserForLoginDto userForLoginDto)
         {
-            var userToCheck = CheckEmail(userForLoginDto);
+            var userToCheck = await CheckEmail(userForLoginDto);
             if (!HashingHelper.VerifyPasswordHash(userForLoginDto.Password, userToCheck.PasswordHash, userToCheck.PasswordSalt))
             {
                 return new ErrorResult();
