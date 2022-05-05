@@ -25,7 +25,7 @@ namespace Business.Concrete
 {
     public class CarManager : ICarService
     {
-        ICarDal _carDal;
+        readonly ICarDal _carDal;
 
         public CarManager(ICarDal carDal)
         {
@@ -36,49 +36,49 @@ namespace Business.Concrete
         [SecuredOperation("admin,")]
         [ValidationAspect(typeof(CarValidator))]
         [PerformanceAspect(5)]
-        public IResult Add(Car t)
+        public async Task<IResult> AsyncAdd(Car t)
         {
-            _carDal.Add(t);
+            await _carDal.AsyncAdd(t);
             return new SuccessResult(Messages.CarInsert);
         }
 
-        public IResult Delete(Car t)
+        public async Task<IResult> AsyncDelete(Car t)
         {
-            _carDal.Delete(t);
+            await _carDal.AsyncDelete(t);
             return new SuccessResult(Messages.CarRemoved);
         }
 
         [LogAspect(typeof(File))]
         [CacheAspect]
-        public IDataResult<List<Car>> GetAll()
+        public async Task<IDataResult<List<Car>>> AsyncGetAll()
         {
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll());
+            return new SuccessDataResult<List<Car>>(await _carDal.AsyncGetAll());
         }
 
-        public IDataResult<Car> GetById(int id)
+        public async Task<IDataResult<Car>> AsyncGetById(int id)
         {
-            return new SuccessDataResult<Car>(_carDal.Get(c => c.Id == id));
-        }
-        
-        public IDataResult<List<CarDetailDto>> GetCarDetails()
-        {
-            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails());
+            return new SuccessDataResult<Car>(await _carDal.AsyncGet(c => c.Id == id));
         }
 
-        public IDataResult<List<CarDetailDto>> GetCarByBrandId(int id)
+        public async Task<IDataResult<List<CarDetailDto>>> AsyncGetCarDetails()
         {
-            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(c => c.BrandId == id));
+            return new SuccessDataResult<List<CarDetailDto>>(await _carDal.AsyncGetCarDetails());
+        }
+
+        public async Task<IDataResult<List<CarDetailDto>>> AsyncGetCarByBrandId(int id)
+        {
+            return new SuccessDataResult<List<CarDetailDto>>(await _carDal.AsyncGetCarDetails(c => c.BrandId == id));
 
         }
 
-        public IDataResult<List<CarDetailDto>> GetCarByColorId(int id)
+        public async Task<IDataResult<List<CarDetailDto>>> AsyncGetCarByColorId(int id)
         {
-            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(c => c.ColorId == id));
+            return new SuccessDataResult<List<CarDetailDto>>(await _carDal.AsyncGetCarDetails(c => c.ColorId == id));
         }
 
-        public IResult Update(Car t)
+        public async Task<IResult> AsyncUpdate(Car t)
         {
-            _carDal.Update(t);
+            await _carDal.AsyncUpdate(t);
             return new SuccessResult(Messages.CarUpdated);
         }
     }

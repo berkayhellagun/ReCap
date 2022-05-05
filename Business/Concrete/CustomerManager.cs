@@ -13,38 +13,38 @@ namespace Business.Concrete
 {
     public class CustomerManager : ICustomerService
     {
-        ICustomerDal _customerDal;
+        readonly ICustomerDal _customerDal;
 
         public CustomerManager(ICustomerDal customerDal)
         {
             _customerDal = customerDal;
         }
 
-        public IResult Add(Customer t)
+        public async Task<IResult> AsyncAdd(Customer t)
         {
-            _customerDal.Add(t);
+            await _customerDal.AsyncAdd(t);
             return new SuccessResult();
         }
 
-        public IResult Delete(Customer t)
+        public async Task<IResult> AsyncDelete(Customer t)
         {
-            _customerDal.Delete(t);
+            await _customerDal.AsyncDelete(t);
             return new SuccessResult();
         }
 
-        public IDataResult<List<Customer>> GetAll()
+        public async Task<IDataResult<List<Customer>>> AsyncGetAll()
         {
-            return new SuccessDataResult<List<Customer>>(_customerDal.GetAll());
+            return new SuccessDataResult<List<Customer>>(await _customerDal.AsyncGetAll());
         }
 
-        public IDataResult<Customer> GetById(int id)
+        public async Task<IDataResult<Customer>> AsyncGetById(int id)
         {
-            return new SuccessDataResult<Customer>(_customerDal.Get(c => c.Id == id));
+            return new SuccessDataResult<Customer>(await _customerDal.AsyncGet(c => c.Id == id));
         }
 
-        public IResult Update(Customer t)
+        public async Task<IResult> AsyncUpdate(Customer t)
         {
-            _customerDal.Update(t);
+            await _customerDal.AsyncUpdate(t);
             return new SuccessResult();
         }
     }

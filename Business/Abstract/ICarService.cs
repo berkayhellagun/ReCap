@@ -12,8 +12,8 @@ namespace Business.Abstract
 {
     public interface ICarService:IManagerService<Car>
     {
-        IDataResult<List<CarDetailDto>> GetCarByBrandId(int id);
-        IDataResult<List<CarDetailDto>> GetCarByColorId(int id);
-        IDataResult<List<CarDetailDto>> GetCarDetails();
+        Task<IDataResult<List<CarDetailDto>>> AsyncGetCarByBrandId(int id);
+        Task<IDataResult<List<CarDetailDto>>> AsyncGetCarByColorId(int id);
+        Task<IDataResult<List<CarDetailDto>>> AsyncGetCarDetails();
     }
 }

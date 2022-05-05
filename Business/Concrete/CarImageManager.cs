@@ -17,9 +17,9 @@ namespace Business.Concrete
 {
     public class CarImageManager : ICarImageService
     {
-        ICarImageDal _carImageDal;
-        IFileHelper _fileHelper;
-        ICarService _carService;
+        readonly ICarImageDal _carImageDal;
+        readonly IFileHelper _fileHelper;
+        readonly ICarService _carService;
 
         public CarImageManager(ICarImageDal carImageDal, IFileHelper fileHelper, ICarService carService)
         {
@@ -28,41 +28,41 @@ namespace Business.Concrete
             _carService = carService;
         }
 
-        public IResult Add(IFormFile formFile, CarImage t)
+        public async Task<IResult> AsyncAdd(IFormFile formFile, CarImage t)
         {
-            IResult result = BusinessRules.Run(CheckIfImageExist(t.CarId), CheckIfCarImageLimit(t.CarId));
+            IResult result = BusinessRules.Run(CheckIfImageExist(t.CarId).Result, CheckIfCarImageLimit(t.CarId).Result);
             if (result != null)
             {
                 return new ErrorResult();
             }
             t.ImagePath = _fileHelper.Upload(formFile, PathConstants.ImagesPath);
             t.Date = DateTime.Now;
-            _carImageDal.Add(t);
+            await _carImageDal.AsyncAdd(t);
             return new SuccessResult();
         }
 
-        public IResult Delete(CarImage t)
+        public async Task<IResult> AsyncDelete(CarImage t)
         {
             _fileHelper.Delete(PathConstants.ImagesPath);
-            _carImageDal.Delete(t);
+            await _carImageDal.AsyncDelete(t);
             return new SuccessResult();
         }
 
-        public IDataResult<List<CarImage>> GetAll()
+        public async Task<IDataResult<List<CarImage>>> AsyncGetAll()
         {
-            return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll());
+            return new SuccessDataResult<List<CarImage>>(await _carImageDal.AsyncGetAll());
         }
 
-        public IDataResult<CarImage> GetById(int id)
+        public async Task<IDataResult<CarImage>> AsyncGetById(int id)
         {
-            return new SuccessDataResult<CarImage>(_carImageDal.Get(c => c.Id == id));
+            return new SuccessDataResult<CarImage>(await _carImageDal.AsyncGet(c => c.Id == id));
         }
 
-        public IDataResult<List<CarImage>> GetImageByCarId(int carId)
+        public async Task<IDataResult<List<CarImage>>> AsyncGetImageByCarId(int carId)
         {
-            var checkImage = BusinessRules.Run(CheckIfNotExistImage(carId));
+            var checkImage = BusinessRules.Run(CheckIfNotExistImage(carId).Result);
             var checkCarId = BusinessRules.Run(CheckCarId(carId).Result);
-            
+
             if (checkCarId != null)
             {
                 return new ErrorDataResult<List<CarImage>>("Car not exist.");
@@ -73,38 +73,39 @@ namespace Business.Concrete
                 return new SuccessDataResult<List<CarImage>>(GetDefaultImage(carId).Data);
             }
 
-            return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll(c => c.CarId == carId));
+            return new SuccessDataResult<List<CarImage>>(await _carImageDal.AsyncGetAll(c => c.CarId == carId));
         }
 
-        public IResult Update(IFormFile formFile, CarImage t)
+        public async Task<IResult> AsyncUpdate(IFormFile formFile, CarImage t)
         {
             t.ImagePath = _fileHelper.Update(formFile, PathConstants.ImagesPath + t.ImagePath, PathConstants.ImagesPath);
-            _carImageDal.Update(t);
+            await _carImageDal.AsyncUpdate(t);
             return new SuccessResult();
         }
 
-        private IResult CheckIfCarImageLimit(int carId)
+        private async Task<IResult> CheckIfCarImageLimit(int carId)
         {
-            var result = _carImageDal.GetAll(c => c.CarId == carId).Count;
-            if (result > 5)
+            var result = await _carImageDal.AsyncGetAll(c => c.CarId == carId);
+
+            if (result.Count > 5)
             {
                 return new ErrorResult();
             }
             return new SuccessResult();
         }
 
-        private IResult CheckIfImageExist(int carId)
+        private async Task<IResult> CheckIfImageExist(int carId)
         {
-            var result = _carImageDal.GetAll(c => c.CarId == carId).Count;
-            if (result > 0)
+            var result = await _carImageDal.AsyncGetAll(c => c.CarId == carId);
+            if (result.Count > 0)
             {
                 return new SuccessResult();
             }
             return new ErrorResult();
         }
-        private IResult CheckIfNotExistImage(int id)
+        private async Task<IResult> CheckIfNotExistImage(int id)
         {
-            var result = _carImageDal.GetAll(c => c.CarId == id);
+            var result = await _carImageDal.AsyncGetAll(c => c.CarId == id);
             if (result.Count == 0)
             {
                 return new ErrorResult();

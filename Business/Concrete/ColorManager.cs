@@ -13,38 +13,38 @@ namespace Business.Concrete
 {
     public class ColorManager : IColorService
     {
-        IColorDal _colorDal;
+        readonly IColorDal _colorDal;
 
         public ColorManager(IColorDal colorDal)
         {
             _colorDal = colorDal;
         }
 
-        public IResult Add(Color t)
+        public async Task<IResult> AsyncAdd(Color t)
         {
-            _colorDal.Add(t);
+            await _colorDal.AsyncAdd(t);
             return new SuccessResult(Messages.ColorAdded);
         }
 
-        public IResult Delete(Color t)
+        public async Task<IResult> AsyncDelete(Color t)
         {
-            _colorDal.Delete(t);
+            await _colorDal.AsyncDelete(t);
             return new SuccessResult(Messages.ColorRemoved);
         }
 
-        public IDataResult<List<Color>> GetAll()
+        public async Task<IDataResult<List<Color>>> AsyncGetAll()
         {
-            return new SuccessDataResult<List<Color>>(_colorDal.GetAll());
+            return new SuccessDataResult<List<Color>>(await _colorDal.AsyncGetAll());
         }
 
-        public IDataResult<Color> GetById(int id)
+        public async Task<IDataResult<Color>> AsyncGetById(int id)
         {
-            return new SuccessDataResult<Color>(_colorDal.Get(c => c.Id == id));
+            return new SuccessDataResult<Color>(await _colorDal.AsyncGet(c => c.Id == id));
         }
 
-        public IResult Update(Color t)
+        public async Task<IResult> AsyncUpdate(Color t)
         {
-            _colorDal.Update(t);
+            await _colorDal.AsyncUpdate(t);
             return new SuccessResult(Messages.ColorUpdated);
         }
     }

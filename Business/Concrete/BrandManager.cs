@@ -13,39 +13,38 @@ namespace Business.Concrete
 {
     public class BrandManager : IBrandService
     {
-
-        IBrandDal _brandDal;
+        readonly IBrandDal _brandDal;
 
         public BrandManager(IBrandDal brandService)
         {
             _brandDal = brandService;
         }
 
-        public IResult Add(Brand t)
+        public async Task<IResult> AsyncAdd(Brand t)
         {
-            _brandDal.Add(t);
+            await _brandDal.AsyncAdd(t);
             return new SuccessResult(Messages.BrandAdded);
         }
 
-        public IResult Delete(Brand t)
+        public async Task<IResult> AsyncDelete(Brand t)
         {
-            _brandDal.Delete(t);
+            await _brandDal.AsyncDelete(t);
             return new SuccessResult(Messages.BrandRemoved);
         }
 
-        public IDataResult<List<Brand>> GetAll()
+        public async Task<IDataResult<List<Brand>>> AsyncGetAll()
         {
-            return new SuccessDataResult<List<Brand>>(_brandDal.GetAll(),Messages.BrandAdded);
+            return new SuccessDataResult<List<Brand>>(await _brandDal.AsyncGetAll());
         }
 
-        public IDataResult<Brand> GetById(int id)
+        public async Task<IDataResult<Brand>> AsyncGetById(int id)
         {
-            return new SuccessDataResult<Brand>(_brandDal.Get(i =>i.Id==id));
+            return new SuccessDataResult<Brand>(await _brandDal.AsyncGet(i =>i.Id==id));
         }
 
-        public IResult Update(Brand t)
+        public async Task<IResult> AsyncUpdate(Brand t)
         {
-            _brandDal.Update(t);
+            await _brandDal.AsyncUpdate(t);
             return new SuccessResult(Messages.BrandUpdated);
         }
     }

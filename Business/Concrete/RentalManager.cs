@@ -15,7 +15,7 @@ namespace Business.Concrete
 {
     public class RentalManager : IRentalService
     {
-        IRentalDal _rentalDal;
+        readonly IRentalDal _rentalDal;
 
         public RentalManager(IRentalDal rentalDal)
         {
@@ -23,32 +23,32 @@ namespace Business.Concrete
         }
 
         [ValidationAspect(typeof(RentalValidator))]
-        public IResult Add(Rental t)
+        public async Task<IResult> AsyncAdd(Rental t)
         {
-            t.RentDate = DateTime.Now;    
-            _rentalDal.Add(t);
+            t.RentDate = DateTime.Now;
+            await _rentalDal.AsyncAdd(t);
             return new SuccessResult(Messages.RentalAdded);
         }
 
-        public IResult Delete(Rental t)
+        public async Task<IResult> AsyncDelete(Rental t)
         {
-            _rentalDal.Delete(t);
+            await _rentalDal.AsyncDelete(t);
             return new SuccessResult();
         }
 
-        public IDataResult<List<Rental>> GetAll()
+        public async Task<IDataResult<List<Rental>>> AsyncGetAll()
         {
-            return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll());
+            return new SuccessDataResult<List<Rental>>(await _rentalDal.AsyncGetAll());
         }
 
-        public IDataResult<Rental> GetById(int id)
+        public async Task<IDataResult<Rental>> AsyncGetById(int id)
         {
-            return new SuccessDataResult<Rental>(_rentalDal.Get(r=>r.Id==id));
+            return new SuccessDataResult<Rental>(await _rentalDal.AsyncGet(r => r.Id == id));
         }
 
-        public IResult Update(Rental t)
+        public async Task<IResult> AsyncUpdate(Rental t)
         {
-            _rentalDal.Update(t);
+            await _rentalDal.AsyncUpdate(t);
             return new SuccessResult();
         }
     }

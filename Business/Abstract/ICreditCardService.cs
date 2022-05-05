@@ -11,11 +11,11 @@ namespace Business.Abstract
 {
     public interface ICreditCardService
     {
-        IDataResult<CreditCard> GetCard(CreditCardDto creditCardDto);
-        IDataResult<CreditCard> GetById(int creditCardId);
-        IResult Update(CreditCard creditCard);
-        IResult Add(CreditCardDto creditCardDto);
-        IResult Delete(CreditCard creditCard);
-        IResult Validate(CreditCardDto creditCardDto);
+        Task<IDataResult<CreditCard>> AsyncGetCard(CreditCardDto creditCardDto);
+        Task<IDataResult<CreditCard>> AsyncGetById(int creditCardId);
+        Task<IResult> AsyncUpdate(CreditCard creditCard);
+        Task<IResult> AsyncAdd(CreditCardDto creditCardDto);
+        Task<IResult> AsyncDelete(CreditCard creditCard);
+        Task<IResult> AsyncValidate(CreditCardDto creditCardDto);
     }
 }

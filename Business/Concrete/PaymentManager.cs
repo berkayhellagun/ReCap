@@ -13,8 +13,8 @@ namespace Business.Concrete
 {
     public class PaymentManager : IPaymentService
     {
-        ICreditCardService _creditCardService;
-        ICarService _carService;
+        readonly ICreditCardService _creditCardService;
+        readonly ICarService _carService;
 
         public PaymentManager(ICreditCardService creditCardService, ICarService carService)
         {
@@ -22,13 +22,13 @@ namespace Business.Concrete
             _carService = carService;
         }
 
-        public IResult Pay(CreditCard creditCard, int carId)
+        public async Task<IResult> AsyncPay(CreditCard creditCard, int carId)
         {
-            var result = _carService.GetById(carId);
+            var result = await _carService.AsyncGetById(carId);
             if (creditCard.Balance >= result.Data.DailyPrice)
             {
                 creditCard.Balance = creditCard.Balance - result.Data.DailyPrice;
-                _creditCardService.Update(creditCard);
+                await _creditCardService.AsyncUpdate(creditCard);
                 return new SuccessResult(Messages.PaymentSuccess);
             }
             return new ErrorResult();

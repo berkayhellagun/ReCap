@@ -14,70 +14,70 @@ namespace Business.Concrete
 {
     public class CreditCardManager : ICreditCardService
     {
-        ICreditCardDal _creditCardDal;
-        
+        readonly ICreditCardDal _creditCardDal;
+
         public CreditCardManager(ICreditCardDal creditCardDal)
         {
             _creditCardDal = creditCardDal;
         }
 
-        public IResult Add(CreditCardDto creditCardDto)
+        public async Task<IResult> AsyncAdd(CreditCardDto creditCardDto)
         {
-            var checkCard = GetCreditCard(creditCardDto);
-            if (checkCard == null)
+            var card = await GetCreditCard(creditCardDto);
+            if (card == null)
             {
-                checkCard.Balance = 0; //provider of this service is bank
-                _creditCardDal.Add(checkCard);
+                card.Balance = 0; //provider of this service is bank
+                await _creditCardDal.AsyncAdd(card);
                 return new SuccessResult();
             }
             return new ErrorResult();
         }
 
-        public IResult Delete(CreditCard creditCard)
+        public async Task<IResult> AsyncDelete(CreditCard creditCard)
         {
-            _creditCardDal.Delete(creditCard);
+            await _creditCardDal.AsyncDelete(creditCard);
             return new SuccessResult();
         }
 
-        public IDataResult<CreditCard> GetCard(CreditCardDto creditCardDto)
+        public async Task<IDataResult<CreditCard>> AsyncGetCard(CreditCardDto creditCardDto)
         {
-            var creditCard = GetCreditCard(creditCardDto);
-            if (creditCard!=null)
+            var creditCard = await GetCreditCard(creditCardDto);
+            if (creditCard != null)
             {
                 return new SuccessDataResult<CreditCard>(creditCard);
             }
             return new ErrorDataResult<CreditCard>(Messages.CreditCardError);
         }
 
-        public IDataResult<CreditCard> GetById(int creditCardId)
+        public async Task<IDataResult<CreditCard>> AsyncGetById(int creditCardId)
         {
-            var creditCard = _creditCardDal.Get(c => c.Id == creditCardId);
-            if (creditCard!=null)
+            var creditCard = await _creditCardDal.AsyncGet(c => c.Id == creditCardId);
+            if (creditCard != null)
             {
                 return new SuccessDataResult<CreditCard>(creditCard);
             }
             return new ErrorDataResult<CreditCard>();
         }
 
-        public IResult Update(CreditCard creditCard)
+        public async Task<IResult> AsyncUpdate(CreditCard creditCard)
         {
-            _creditCardDal.Update(creditCard);
+            await _creditCardDal.AsyncUpdate(creditCard);
             return new SuccessResult();
         }
 
-        public IResult Validate(CreditCardDto creditCardDto)
+        public async Task<IResult> AsyncValidate(CreditCardDto creditCardDto)
         {
-            var creditCardInfo = GetCreditCard(creditCardDto);
-            if (creditCardInfo!=null)
+            var creditCardInfo = await GetCreditCard(creditCardDto);
+            if (creditCardInfo != null)
             {
                 return new SuccessResult();
             }
             return new ErrorResult();
         }
 
-        private CreditCard GetCreditCard(CreditCardDto creditCardDto)
+        private async Task<CreditCard> GetCreditCard(CreditCardDto creditCardDto)
         {
-            return _creditCardDal.Get(c =>
+            return await _creditCardDal.AsyncGet(c =>
                 c.CardNumber == creditCardDto.CardNumber &&
                 c.ExpireYear == creditCardDto.ExpireYear &&
                 c.ExpireMonth == creditCardDto.ExpireMonth &&

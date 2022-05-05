@@ -11,12 +11,12 @@ namespace Business.Abstract
 {
     public interface ICarImageService
     {
-        IDataResult<List<CarImage>> GetImageByCarId(int id);
-        IResult Add(IFormFile formFile, CarImage t);
-        IResult Delete(CarImage t);
-        IDataResult<List<CarImage>> GetAll();
-        IDataResult<CarImage> GetById(int id);
-        IResult Update(IFormFile formFile, CarImage t);
+        Task<IDataResult<List<CarImage>>> AsyncGetImageByCarId(int id);
+        Task<IResult> AsyncAdd(IFormFile formFile, CarImage t);
+        Task<IResult> AsyncDelete(CarImage t);
+        Task<IDataResult<List<CarImage>>> AsyncGetAll();
+        Task<IDataResult<CarImage>> AsyncGetById(int id);
+        Task<IResult> AsyncUpdate(IFormFile formFile, CarImage t);
 
     }
 }

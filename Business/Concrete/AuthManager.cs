@@ -16,8 +16,8 @@ namespace Business.Concrete
 {
     public class AuthManager : IAuthService
     {
-        IUserService _userService;
-        ITokenHelper _tokenHelper;
+        readonly IUserService _userService;
+        readonly ITokenHelper _tokenHelper;
 
         public AuthManager(IUserService userService, ITokenHelper tokenHelper)
         {
@@ -51,7 +51,8 @@ namespace Business.Concrete
         public async Task<IDataResult<AccessToken>> CreateAccessToken(User user)
         {
             var claims = await _userService.AsyncGetClaims(user);
-            var accessToken = await _tokenHelper.CreateToken(user, claims);
+            //
+            var accessToken = await _tokenHelper.AsyncCreateToken(user, claims);
             return new SuccessDataResult<AccessToken>(accessToken, "Access-Token Created");
         }
 

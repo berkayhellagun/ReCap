@@ -11,6 +11,6 @@ namespace Business.Abstract
 {
     public interface IPaymentService
     {
-        IResult Pay(CreditCard creditCard, int carId);
+        Task<IResult> AsyncPay(CreditCard creditCard, int carId);
     }
 }
