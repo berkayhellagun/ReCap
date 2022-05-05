@@ -26,5 +26,9 @@ namespace DataAccess.Concrete.EntityFramework
 
             }
         }
+        public Task<List<OperationClaim>> AsyncGetClaims(User user)
+        {
+            return Task.FromResult(GetClaims(user));
+        }
     }
 }

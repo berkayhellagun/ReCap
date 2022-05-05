@@ -14,6 +14,7 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfCarDal : EfEntityRepositoryBase<Car, DBContex>, ICarDal
     {
+
         public List<CarDetailDto> GetCarDetails(Expression<Func<Car, bool>> filter = null)
         {
             using (DBContex contex = new DBContex())
@@ -31,6 +32,10 @@ namespace DataAccess.Concrete.EntityFramework
 
                 return result.ToList();
             }
+        }
+        public Task<List<CarDetailDto>> AsyncGetCarDetails(Expression<Func<Car, bool>> filter = null)
+        {
+            return Task.FromResult(GetCarDetails(filter));
         }
     }
 }
