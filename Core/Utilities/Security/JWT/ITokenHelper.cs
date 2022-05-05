@@ -9,6 +9,6 @@ namespace Core.Utilities.Security.JWT
 {
     public interface ITokenHelper
     {
-        Task<AccessToken> CreateToken(User user,List<OperationClaim> operationClaims);
+        public Task<AccessToken> AsyncCreateToken(User user,List<OperationClaim> operationClaims);
     }
 }

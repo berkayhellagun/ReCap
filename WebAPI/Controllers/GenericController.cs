@@ -18,7 +18,7 @@ namespace WebAPI.Controllers
     public class GenericController<TEntity> : ControllerBase, IGeneric<TEntity>
         where TEntity : class, IEntity, new()
     {
-        IManagerService<TEntity> _manager;
+        readonly IManagerService<TEntity> _manager;
 
         public GenericController(IManagerService<TEntity> manager)
         {

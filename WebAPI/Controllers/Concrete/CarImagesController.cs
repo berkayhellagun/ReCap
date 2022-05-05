@@ -3,6 +3,7 @@ using Business.Concrete;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace WebAPI.Controllers.Concrete
 {
@@ -10,16 +11,16 @@ namespace WebAPI.Controllers.Concrete
     [ApiController]
     public class CarImagesController : ControllerBase
     {
-        ICarImageService _carImageService;
+        readonly ICarImageService _carImageService;
 
         public CarImagesController(ICarImageService carImageService)
         {
             _carImageService = carImageService;
         }
         [HttpPost("add")]
-        public IActionResult Add([FromForm(Name = "Image")] IFormFile formFile, CarImage t)
+        public async Task<IActionResult> Add([FromForm(Name = "Image")] IFormFile formFile, CarImage t)
         {
-            var result = _carImageService.Add(formFile, t);
+            var result = await _carImageService.AsyncAdd(formFile, t);
             if (result.Success)
             {
                 return Ok(result);
@@ -28,9 +29,9 @@ namespace WebAPI.Controllers.Concrete
         }
 
         [HttpDelete("delete")]
-        public IActionResult Delete(CarImage t)
+        public async Task<IActionResult> Delete(CarImage t)
         {
-            var result = _carImageService.Delete(t);
+            var result = await _carImageService.AsyncDelete(t);
             if (result.Success)
             {
                 return Ok(result);
@@ -39,9 +40,9 @@ namespace WebAPI.Controllers.Concrete
         }
 
         [HttpGet("getall")]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var result = _carImageService.GetAll();
+            var result = await _carImageService.AsyncGetAll();
             if (result.Success)
             {
                 return Ok(result);
@@ -50,9 +51,9 @@ namespace WebAPI.Controllers.Concrete
         }
 
         [HttpGet("getbyid")]
-        public IActionResult GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
-            var result = _carImageService.GetById(id);
+            var result = await _carImageService.AsyncGetById(id);
             if (result.Success)
             {
                 return Ok(result);
@@ -61,9 +62,9 @@ namespace WebAPI.Controllers.Concrete
         }
 
         [HttpPut("update")]
-        public IActionResult Update([FromForm(Name = "Image")] IFormFile formFile, CarImage t)
+        public async Task<IActionResult> Update([FromForm(Name = "Image")] IFormFile formFile, CarImage t)
         {
-            var result = _carImageService.Update(formFile, t);
+            var result = await _carImageService.AsyncUpdate(formFile, t);
             if (result.Success)
             {
                 return Ok(result);
@@ -71,9 +72,9 @@ namespace WebAPI.Controllers.Concrete
             return BadRequest(result);
         }
         [HttpGet("getimagebycarid")]
-        public IActionResult GetImageByCarId(int id)
+        public async Task<IActionResult> GetImageByCarId(int id)
         {
-            var result = _carImageService.GetImageByCarId(id);
+            var result = await _carImageService.AsyncGetImageByCarId(id);
             if (result.Success)
             {
                 return Ok(result);

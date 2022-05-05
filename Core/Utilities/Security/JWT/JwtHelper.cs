@@ -15,9 +15,9 @@ namespace Core.Utilities.Security.JWT
 {
     public class JwtHelper : ITokenHelper
     {
-        IConfiguration _configuration;
-        TokenOptions _tokenOptions;
-        DateTime _accessTokenExpiration;
+        readonly IConfiguration _configuration;
+        readonly TokenOptions _tokenOptions;
+        readonly DateTime _accessTokenExpiration;
 
 
         public JwtHelper(IConfiguration configuration)
@@ -36,6 +36,11 @@ namespace Core.Utilities.Security.JWT
             var name = jwtSecurityTokenHandler.WriteToken(jwt);
             return new AccessToken { Name = name, ExpirationTime = _accessTokenExpiration };
         }
+        public Task<AccessToken> AsyncCreateToken(User user, List<OperationClaim> operationClaims)
+        {
+            return Task.FromResult(CreateToken(user, operationClaims));
+        }
+
 
         public JwtSecurityToken CreateJwtSecurityToken(TokenOptions tokenOptions, User user, SigningCredentials signingCredentials, List<OperationClaim> operationClaims)
         {
@@ -59,5 +64,7 @@ namespace Core.Utilities.Security.JWT
             claims.AddRoles(operationClaims.Select(c => c.Name).ToArray());
             return claims;
         }
+
+        
     }
 }
