@@ -10,12 +10,12 @@ namespace Core.CrossCuttingConcerns.Caching.Redis
 {
     public class RedisServer
     {
-        private readonly IDatabase _database;
-        private readonly int _currentDatabaseId = 0;
+        private IDatabase _database;
+        private int _currentDatabaseId = 0;
         private static string _configurationString = String.Empty;
-        private readonly ConnectionMultiplexer _connectionMultiplexer;
+        private ConnectionMultiplexer _connectionMultiplexer;
 
-        private readonly object _lockObject = new object();
+        private object _lockObject = new object();
 
         public IDatabase Database => _database;
 

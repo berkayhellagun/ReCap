@@ -2,23 +2,22 @@
 using Entities.Concrete;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace WebAPI.Controllers.Concrete
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CarsController : GenericController<Car>
+    public class CarsController:GenericController<Car>
     {
         protected ICarService _carService;
-        public CarsController(ICarService carService) : base(carService)
+        public CarsController(ICarService carService):base(carService)
         {
             _carService = carService;
         }
         [HttpGet("getcarbybrandid")]
-        public async Task<IActionResult> GetCarByBrandId(int id)
+        public IActionResult GetCarByBrandId(int id)
         {
-            var result = await _carService.AsyncGetCarByBrandId(id);
+            var result =_carService.GetCarByBrandId(id);
             if (result.Success)
             {
                 return Ok(result);
@@ -27,9 +26,9 @@ namespace WebAPI.Controllers.Concrete
         }
 
         [HttpGet("getcarbycolorid")]
-        public async Task<IActionResult> GetCarByColorId(int id)
+        public IActionResult GetCarByColorId(int id)
         {
-            var result = await _carService.AsyncGetCarByColorId(id);
+            var result = _carService.GetCarByColorId(id);
             if (result.Success)
             {
                 return Ok(result.Success);

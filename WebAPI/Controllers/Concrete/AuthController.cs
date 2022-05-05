@@ -9,7 +9,7 @@ namespace WebAPI.Controllers.Concrete
     [ApiController]
     public class AuthController : Controller
     {
-        private readonly IAuthService _authService;
+        private IAuthService _authService;
 
         public AuthController(IAuthService authService)
         {

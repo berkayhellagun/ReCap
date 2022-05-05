@@ -2,7 +2,6 @@
 using Entities.Concrete;
 using Entities.DTOs;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace WebAPI.Controllers.Concrete
 {
@@ -10,7 +9,7 @@ namespace WebAPI.Controllers.Concrete
     [ApiController]
     public class CreditCardsController : Controller
     {
-        readonly ICreditCardService _creditCardService;
+        ICreditCardService _creditCardService;
 
         public CreditCardsController(ICreditCardService creditCardService)
         {
@@ -18,9 +17,9 @@ namespace WebAPI.Controllers.Concrete
         }
 
         [HttpPost("add")]
-        public async Task<IActionResult> Add(CreditCardDto creditCardDto)
+        public IActionResult Add(CreditCardDto creditCardDto)
         {
-            var result = await _creditCardService.AsyncAdd(creditCardDto);
+            var result = _creditCardService.Add(creditCardDto);
             if (result.Success)
             {
                 return Ok();
@@ -29,9 +28,9 @@ namespace WebAPI.Controllers.Concrete
         }
 
         [HttpDelete("delete")]
-        public async Task<IActionResult> Delete(CreditCard creditCard)
+        public IActionResult Delete(CreditCard creditCard)
         {
-            var result = await _creditCardService.AsyncDelete(creditCard);
+            var result= _creditCardService.Delete(creditCard);
             if (result.Success)
             {
                 return Ok();
@@ -40,9 +39,9 @@ namespace WebAPI.Controllers.Concrete
         }
 
         [HttpPost("getcard")]
-        public async Task<IActionResult> GetCard(CreditCardDto creditCardDto)
+        public IActionResult GetCard(CreditCardDto creditCardDto)
         {
-            var result = await _creditCardService.AsyncGetCard(creditCardDto);
+            var result = _creditCardService.GetCard(creditCardDto);
             if (result.Success)
             {
                 return Ok(result.Data);
@@ -51,9 +50,9 @@ namespace WebAPI.Controllers.Concrete
         }
 
         [HttpGet("getbyid")]
-        public async Task<IActionResult> GetById(int id)
+        public IActionResult GetById(int id)
         {
-            var result = await _creditCardService.AsyncGetById(id);
+            var result=_creditCardService.GetById(id);
             if (result.Success)
             {
                 return Ok();
@@ -62,9 +61,9 @@ namespace WebAPI.Controllers.Concrete
         }
 
         [HttpPut("update")]
-        public async Task<IActionResult> Update(CreditCard creditCard)
+        public IActionResult Update(CreditCard creditCard)
         {
-            var result = await _creditCardService.AsyncUpdate(creditCard);
+            var result = _creditCardService.Update(creditCard);
             if (result.Success)
             {
                 return Ok();

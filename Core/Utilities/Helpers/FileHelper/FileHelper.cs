@@ -11,14 +11,12 @@ namespace Core.Utilities.Helpers.FileHelper
 {
     public class FileHelper : IFileHelper
     {
-        public bool Delete(string path)
+        public void Delete(string path)
         {
             if (File.Exists(path))
             {
                 File.Delete(path);
-                return true;
             }
-            return false;
         }
 
         public string Update(IFormFile file, string path, string root)

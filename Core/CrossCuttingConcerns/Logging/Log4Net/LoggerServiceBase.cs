@@ -13,8 +13,8 @@ namespace Core.CrossCuttingConcerns.Logging.Log4Net
 {
     public class LoggerServiceBase
     {
-        private readonly string LogConfigFileName = "log4net.config";
-        private readonly ILog _log;
+        private string LogConfigFileName = "log4net.config";
+        private ILog _log;
         public LoggerServiceBase(string name)
         {
             XmlDocument xmlDocument = new XmlDocument();
