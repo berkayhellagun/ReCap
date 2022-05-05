@@ -15,20 +15,20 @@ namespace Business.BusinessAspect.Autofac
     public class SecuredOperation : MethodInterception
     {
         private string[] _roles;
-        private IHttpContextAccessor _httpContextAccessor;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         public SecuredOperation(string roles)
         {
-            _roles = roles.Split(',');
+            _roles = roles.Split(','); //admin|,|...
             _httpContextAccessor = ServiceTool.ServiceProvider.GetService<IHttpContextAccessor>();
         }
 
         protected override void OnBefore(IInvocation invocation)
         {
-            var roleClaims = _httpContextAccessor.HttpContext.User.ClaimRoles();
+            var roleClaims = _httpContextAccessor.HttpContext.User.ClaimRoles(); // we get user claims 
             foreach (var role in _roles)
             {
-                if (roleClaims.Contains(role))
+                if (roleClaims.Contains(role)) //does exist role claims in role array
                 {
                     return;
                 }
