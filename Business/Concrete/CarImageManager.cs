@@ -33,7 +33,7 @@ namespace Business.Concrete
             IResult result = BusinessRules.Run(CheckIfImageExist(t.CarId).Result, CheckIfCarImageLimit(t.CarId).Result);
             if (result != null)
             {
-                return new ErrorResult();
+                return new ErrorResult(result.Message);
             }
             t.ImagePath = _fileHelper.Upload(formFile, PathConstants.ImagesPath);
             t.Date = DateTime.Now;
