@@ -9,7 +9,7 @@ namespace WebAPI.Controllers.Concrete
     [ApiController]
     public class CustomersController : GenericController<Customer>
     {
-        ICustomerService _customerService;
+        readonly ICustomerService _customerService;
 
         public CustomersController(ICustomerService customerService):base(customerService)
         {

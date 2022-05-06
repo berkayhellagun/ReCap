@@ -9,8 +9,8 @@ namespace WebAPI.Controllers.Concrete
     [ApiController]
     public class BrandsController:GenericController<Brand>
     {
-        IBrandService _brandService;
-
+        readonly IBrandService _brandService;
+        
         public BrandsController(IBrandService brandService):base(brandService)
         {
             _brandService = brandService;

@@ -9,7 +9,7 @@ namespace WebAPI.Controllers.Concrete
     [ApiController]
     public class UsersController : GenericController<User>
     {
-        IUserService _userService;
+        readonly IUserService _userService;
 
         public UsersController(IUserService userService):base(userService)
         {

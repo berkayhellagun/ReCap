@@ -3,6 +3,7 @@ using Entities.Concrete;
 using Entities.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace WebAPI.Controllers.Concrete
 {
@@ -10,7 +11,7 @@ namespace WebAPI.Controllers.Concrete
     [ApiController]
     public class PaymentsController : ControllerBase
     {
-        IPaymentService _paymentService;
+        readonly IPaymentService _paymentService;
 
         public PaymentsController(IPaymentService paymentService, ICreditCardService creditCardService)
         {
@@ -18,9 +19,9 @@ namespace WebAPI.Controllers.Concrete
         }
 
         [HttpPost("paymentInfo")]
-        public IActionResult CheckPaymentInfo(CreditCard creditCard, int carId)
+        public async Task<IActionResult> CheckPaymentInfo(CreditCard creditCard, int carId)
         {
-            var result = _paymentService.Pay(creditCard, carId);
+            var result = await _paymentService.AsyncPay(creditCard, carId);
             if (result.Success)
             {
                 return Ok(result);

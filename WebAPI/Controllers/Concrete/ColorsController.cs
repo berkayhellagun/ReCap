@@ -9,7 +9,7 @@ namespace WebAPI.Controllers.Concrete
     [ApiController]
     public class ColorsController : GenericController<Color>
     {
-        IColorService _colorService;
+        readonly IColorService _colorService;
         public ColorsController(IColorService colorService):base(colorService)
         {
             _colorService = colorService;

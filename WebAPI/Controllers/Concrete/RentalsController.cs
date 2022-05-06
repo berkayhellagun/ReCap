@@ -9,7 +9,7 @@ namespace WebAPI.Controllers.Concrete
     [ApiController]
     public class RentalsController : GenericController<Rental>
     {
-        IRentalService _rentalService;
+        readonly IRentalService _rentalService;
 
         public RentalsController(IRentalService rentalService):base(rentalService)
         {

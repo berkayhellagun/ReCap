@@ -18,7 +18,7 @@ namespace WebAPI.Controllers
     public class GenericController<TEntity> : ControllerBase, IGeneric<TEntity>
         where TEntity : class, IEntity, new()
     {
-        IManagerService<TEntity> _manager;
+        readonly IManagerService<TEntity> _manager;
 
         public GenericController(IManagerService<TEntity> manager)
         {
@@ -28,7 +28,7 @@ namespace WebAPI.Controllers
         [HttpPost("add")]
         public async Task<IActionResult> Add(TEntity t)
         {
-            var result=await _manager.AsyncAdd(t);
+            var result = await _manager.AsyncAdd(t);
             if (result.Success)
             {
                 return Ok(result.Message);
