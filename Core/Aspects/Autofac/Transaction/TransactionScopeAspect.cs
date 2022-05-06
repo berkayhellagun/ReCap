@@ -13,7 +13,7 @@ namespace Core.Aspects.Autofac.Transaction
     {
         public override void Intercept(IInvocation invocation)
         {
-            using (TransactionScope transactionScope = new TransactionScope())
+            using (TransactionScope transactionScope = new TransactionScope()) //IDisposible 
             {
                 try
                 {

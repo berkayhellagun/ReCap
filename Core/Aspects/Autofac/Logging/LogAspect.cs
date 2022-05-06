@@ -12,7 +12,7 @@ namespace Core.Aspects.Autofac.Logging
 {
     public class LogAspect : MethodInterception
     {
-        LoggerServiceBase _loggerServiceBase;
+        readonly LoggerServiceBase _loggerServiceBase;
 
         public LogAspect(Type logger)
         {
