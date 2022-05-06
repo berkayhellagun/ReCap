@@ -13,12 +13,12 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            CarManagerTest();
+            //CarManagerTest();
             //UserManagerTest();
             //RentalTest();
         }
 
-        private static void CarManagerTest()
+        /*private static void CarManagerTest()
         {
             CarManager carManager = new CarManager(new EfCarDal());
             Car car = new Car();
@@ -59,6 +59,6 @@ namespace ConsoleUI
             {
                 Console.WriteLine("All Customer's id: "+item.CustomerId);
             }
-        }
+        }*/
     }
 }
