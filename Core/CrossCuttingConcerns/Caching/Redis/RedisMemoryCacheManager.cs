@@ -10,7 +10,7 @@ namespace Core.CrossCuttingConcerns.Caching.Redis
 {
     public class RedisMemoryCacheManager : ICacheManager
     {
-        private readonly RedisServer _redisServer;
+        protected readonly RedisServer _redisServer;
 
         public RedisMemoryCacheManager(RedisServer redisServer)
         {
